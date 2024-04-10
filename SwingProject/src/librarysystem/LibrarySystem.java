@@ -31,6 +31,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
         CheckoutRecordWindow.INSTANCE,
         CheckoutEntryWindow.INSTANCE,
         BookCopyWindow.INSTANCE,
+        ViewAllBooksWindow.INSTANCE,
+//        AddMemberWindow.INSTANCE,
 	};
     	
 	public static void hideAllWindows() {		
@@ -81,7 +83,6 @@ public class LibrarySystem extends JFrame implements LibWindow {
 
         gbc.gridy++; // Move to the next row
         gbc.anchor = GridBagConstraints.CENTER;
-        // Align components to the center horizontally
         JButton loginButton = new JButton("Login");
         mainPanel.add(loginButton, gbc);
 
@@ -194,8 +195,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			AllMemberIdsWindow.INSTANCE.init();
 			AllMemberIdsWindow.INSTANCE.pack();
 			AllMemberIdsWindow.INSTANCE.setVisible(true);
-			
-			
+
 			LibrarySystem.hideAllWindows();
 			AllBookIdsWindow.INSTANCE.init();
 			

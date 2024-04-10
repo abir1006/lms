@@ -1,10 +1,14 @@
 package librarysystem;
 
+import business.Book;
 import business.ControllerInterface;
 import business.SystemController;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class CheckoutRecordWindow extends JFrame implements LibWindow {
@@ -24,14 +28,19 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
 	private JPanel lowerPanel;
 	private JPanel leftTextPanel;
 	private JPanel rightTextPanel;
+    private JPanel tablePanel;
+    private JPanel continueButtonPanel;
 
-	private JTextField memberId;
+    private JTextField memberId;
 	private JTextField Isbn;
 	private JLabel label;
 
     private JButton checkButton;
     private JButton continueButton;
     private JButton backButton;
+
+    private DefaultTableModel model;
+    private JTable table;
 
 	public boolean isInitialized() {
 		return isInitialized;
@@ -46,26 +55,54 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
     private CheckoutRecordWindow() {}
     
     public void init() {
-        CheckoutRecordWindow.INSTANCE.setTitle("Checkout Record Form");
-        CheckoutRecordWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        CheckoutRecordWindow.INSTANCE.setVisible(true);
-
         mainPanel = new JPanel();
 
         defineUpperHalf();
         defineMiddleHalf();
+        createTablePanel();
 
         BorderLayout bl = new BorderLayout();
-        bl.setVgap(30);
+        bl.setVgap(10);
 
         mainPanel.setLayout(bl);
         mainPanel.add(upperHalf, BorderLayout.NORTH);
         mainPanel.add(middleHalf, BorderLayout.CENTER);
+        mainPanel.add(tablePanel, BorderLayout.CENTER );
+
         getContentPane().add(mainPanel);
         isInitialized(true);
         pack();
         setSize(660, 500);
     }
+
+    public void createTablePanel() {
+        tablePanel = new JPanel();
+        tablePanel.setLayout(new BorderLayout());
+        JSeparator s = new JSeparator();
+        s.setOrientation(SwingConstants.HORIZONTAL);
+        tablePanel.add(s, BorderLayout.SOUTH);
+
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Title");
+        tableModel.addColumn("ISBN");
+        tableModel.addColumn("NumOfCopy");
+        tableModel.addColumn("Num");
+        tableModel.addColumn("Isavailable");
+
+        HashMap<String,Book> bookList = ci.getAllBooks();
+        for(Book b: bookList.values()){
+            tableModel.addRow(new Object[]{b.getTitle(), b.getIsbn(), b.getCopyNums(), b.getNumCopies(), b.isAvailable()});
+        }
+
+        JTable table = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        table.getTableHeader().setVisible(true);
+
+        tablePanel.add(scrollPane, BorderLayout.CENTER); // Add scroll pane with CENTER constraint
+    }
+
+
     private void defineUpperHalf() {
     		upperHalf = new JPanel();
     		upperHalf.setLayout(new BorderLayout());
@@ -84,7 +121,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
     		JSeparator s = new JSeparator();
     		s.setOrientation(SwingConstants.HORIZONTAL);
     		middleHalf.add(s, BorderLayout.SOUTH);
-    	}
+    }
 
     private void defineTopPanel() {
         topPanel = new JPanel();
@@ -148,7 +185,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
     }
 
     private void defineContinuePanel(){
-            JPanel additionalButtonPanel = new JPanel();
+           continueButtonPanel = new JPanel();
 
             backButton = Util.buttonStyle(new JButton("<< Main Menu"));
             addBackButtonListener(backButton);
@@ -158,8 +195,8 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
 
             continueButton = Util.buttonStyle(new JButton("Continue >>"));
             continueButtonListener(continueButton);
-            additionalButtonPanel.add(continueButton);
-            lowerPanel.add(additionalButtonPanel);
+            continueButtonPanel.add(continueButton);
+            lowerPanel.add(continueButtonPanel);
     }
 
     private static void addBackButtonListener(JButton butn) {
@@ -181,14 +218,15 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
                 // Repaint the frame
                 revalidate();
                 repaint();
+
+            }else{
+                message = "Book is not found with given criteria.";
             }
             //Member
             //{1004=Member Info: ID: 1004, name: Ricardo Montalbahn, 641-472-2871 (501 Central, Mountain View, 94707), 1003=Member Info: ID: 1003, name: Sarah Eagleton, 451-234-8811 (42 Dogwood Dr., Fairfield, 52556), 1002=Member Info: ID: 1002, name: Drew Stevens, 702-998-2414 (1435 Channing Ave, Palo Alto, 94301), 1001=Member Info: ID: 1001, name: Andy Rogers, 641-223-2211 (5001 Venice Dr., Los Angeles, 93736)}
             //Book
             //{48-56882=isbn: 48-56882, maxLength: 7, available: true, 28-12331=isbn: 28-12331, maxLength: 7, available: true, 23-11451=isbn: 23-11451, maxLength: 21, available: true, 99-22223=isbn: 99-22223, maxLength: 21, available: true}
-
             // ISBN: 48-56882, member: 1004
-            //LibrarySystem.hideAllWindows();
             JOptionPane.showMessageDialog(this, message);
         });
     }
