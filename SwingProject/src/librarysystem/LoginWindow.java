@@ -44,9 +44,6 @@ public class LoginWindow extends JFrame implements LibWindow {
 	private JButton loginButton;
 	private JButton logoutButton;
 	
-	
-	
-	
 	public boolean isInitialized() {
 		return isInitialized;
 	}
@@ -57,7 +54,8 @@ public class LoginWindow extends JFrame implements LibWindow {
 	public void clear() {
 		messageBar.setText("");
 	}
-	
+
+    private String message;
 	/* This class is a singleton */
     private LoginWindow () {}
     
@@ -77,11 +75,8 @@ public class LoginWindow extends JFrame implements LibWindow {
     		isInitialized(true);
     		pack();
     		//setSize(660, 500);
-
-    	
     }
     private void defineUpperHalf() {
-    		
     		upperHalf = new JPanel();
     		upperHalf.setLayout(new BorderLayout());
     		defineTopPanel();
@@ -90,7 +85,6 @@ public class LoginWindow extends JFrame implements LibWindow {
     		upperHalf.add(topPanel, BorderLayout.NORTH);
     		upperHalf.add(middlePanel, BorderLayout.CENTER);
     		upperHalf.add(lowerPanel, BorderLayout.SOUTH);
-    		
     	}
     	private void defineMiddleHalf() {
     		middleHalf = new JPanel();
@@ -102,7 +96,6 @@ public class LoginWindow extends JFrame implements LibWindow {
     		
     	}
     	private void defineLowerHalf() {
-
     		lowerHalf = new JPanel();
     		lowerHalf.setLayout(new FlowLayout(FlowLayout.LEFT));
     		
@@ -120,10 +113,7 @@ public class LoginWindow extends JFrame implements LibWindow {
     		intPanel.add(loginLabel, BorderLayout.CENTER);
     		topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     		topPanel.add(intPanel);
-    		
     	}
-    	
-    	
     	
     	private void defineMiddlePanel() {
     		middlePanel=new JPanel();
@@ -186,7 +176,12 @@ public class LoginWindow extends JFrame implements LibWindow {
     	
     	private void addLoginButtonListener(JButton butn) {
     		butn.addActionListener(evt -> {
-    			JOptionPane.showMessageDialog(this,"Successful Login");
+                if(password.getText().equals("admin") && username.getText().equals("admin")){
+                    message = "Successful Login";
+                }else{
+                    message = "Invalid credential.Please try again";
+                }
+    			JOptionPane.showMessageDialog(this,message);
     				
     		});
     	}
