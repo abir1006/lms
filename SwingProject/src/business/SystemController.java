@@ -3,6 +3,7 @@ package business;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dataaccess.Auth;
 import dataaccess.DataAccess;
@@ -48,6 +49,32 @@ public class SystemController implements ControllerInterface {
         List<String> retval = new ArrayList<>();
         retval.addAll(da.readBooksMap().keySet());
         return retval;
+    }
+
+    @Override
+    public boolean checkRecord(String memberId, String Isbn) {
+        DataAccess da = new DataAccessFacade();
+        boolean IsbnFound = false;
+        boolean memberIdFound = false;
+
+        for(Map.Entry<String, Book> h: da.readBooksMap().entrySet()){
+            System.out.println(h.getValue());
+            if(h.getValue().getIsbn().equals(Isbn)){
+                IsbnFound = true;
+            }
+        }
+//        48-56882 ====1004
+        for(Map.Entry<String, LibraryMember> h: da.readMemberMap().entrySet()){
+
+            if(h.getValue().getMemberId().equals(memberId)){
+                memberIdFound = true;
+            }else{
+                System.out.println(h.getValue().getMemberId()+" =="+memberId);
+            }
+        }
+        if(IsbnFound && memberIdFound)
+            return true;
+        return false;
     }
 
 

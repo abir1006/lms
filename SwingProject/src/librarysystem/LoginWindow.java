@@ -58,7 +58,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 
     		defineUpperHalf();
     		defineMiddleHalf();
-    		defineLowerHalf();
+//    		defineLowerHalf();
 
     		BorderLayout bl = new BorderLayout();
     		bl.setVgap(30);
@@ -66,7 +66,7 @@ public class LoginWindow extends JFrame implements LibWindow {
     		mainPanel.setLayout(bl);
     		mainPanel.add(upperHalf, BorderLayout.NORTH);
     		mainPanel.add(middleHalf, BorderLayout.CENTER);
-    		mainPanel.add(lowerHalf, BorderLayout.SOUTH);
+//    		mainPanel.add(lowerHalf, BorderLayout.SOUTH);
     		getContentPane().add(mainPanel);
     		isInitialized(true);
     		pack();
@@ -211,14 +211,17 @@ public class LoginWindow extends JFrame implements LibWindow {
                 String  role = ci.login(username.getText(), password.getText());
                 switch (role) {
                     case "LIBRARIAN":
+                        LibrarySystem.hideAllWindows();
                         AddBookWindow.INSTANCE.setVisible(true);
                         message = "Welcome, LIBRARIAN!";
                         break;
                     case "ADMIN":
-                        AddBookWindow.INSTANCE.setVisible(true);
+                        LibrarySystem.hideAllWindows();
+                        CheckoutRecordWindow.INSTANCE.setVisible(true);
                         message = "Welcome, Admin!";
                         break;
                     case "BOTH":
+                        LibrarySystem.hideAllWindows();
                         AddBookWindow.INSTANCE.setVisible(true);
                         message = "Welcome, Both!";
                         break;
@@ -230,7 +233,7 @@ public class LoginWindow extends JFrame implements LibWindow {
             } catch (LoginException e) {
                 e.printStackTrace();
             }
-            LibrarySystem.hideAllWindows();
+
             JOptionPane.showMessageDialog(this, message);
         });
     }

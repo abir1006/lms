@@ -12,5 +12,6 @@ public interface ControllerInterface {
 	public List<String> allBookIds();
 
     public List<String> allBooks();
-	
+
+    public boolean checkRecord(String memberId, String Isbn);
 }

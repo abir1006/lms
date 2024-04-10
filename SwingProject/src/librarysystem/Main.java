@@ -13,12 +13,17 @@ public class Main {
 	public static void main(String[] args) {
 	      EventQueue.invokeLater(() -> 
 	         {
-	            LoginWindow.INSTANCE.setTitle("Sample Library Application");
-	            LoginWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	            
-	            LoginWindow.INSTANCE.init();
-	            centerFrameOnDesktop(LoginWindow.INSTANCE);
-	            LoginWindow.INSTANCE.setVisible(true);
+//	            LoginWindow.INSTANCE.setTitle("Library Application");
+//	            LoginWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//	            LoginWindow.INSTANCE.init();
+//	            centerFrameOnDesktop(LoginWindow.INSTANCE);
+//	            LoginWindow.INSTANCE.setVisible(true);
+
+                 CheckoutRecordWindow.INSTANCE.setTitle("Library Application");
+                 CheckoutRecordWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                 CheckoutRecordWindow.INSTANCE.init();
+                 centerFrameOnDesktop(CheckoutRecordWindow.INSTANCE);
+                 CheckoutRecordWindow.INSTANCE.setVisible(true);
 
 	         });
 	   }

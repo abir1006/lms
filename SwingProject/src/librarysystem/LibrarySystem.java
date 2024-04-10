@@ -28,6 +28,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		AllMemberIdsWindow.INSTANCE,
 		AllBookIdsWindow.INSTANCE,
         AddBookWindow.INSTANCE,
+        CheckoutRecordWindow.INSTANCE,
 	};
     	
 	public static void hideAllWindows() {		
@@ -39,20 +40,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     private LibrarySystem() {}
     
     public void init() {
-//    	formatContentPane();
-//    	setPathToImage();
-//    	insertSplashImage();
-//
-//		createMenus();
-//		//pack();
-//		setSize(660,500);
-//		isInitialized = true;
-
         formatContentPane();
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setSize(400, 300);
-//        setLocationRelativeTo(null); // Center the window on the screen
-//        setVisible(true);
     }
     
 //    private void formatContentPane() {
