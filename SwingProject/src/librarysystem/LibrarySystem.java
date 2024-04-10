@@ -30,6 +30,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         AddBookWindow.INSTANCE,
         CheckoutRecordWindow.INSTANCE,
         CheckoutEntryWindow.INSTANCE,
+        BookCopyWindow.INSTANCE,
 	};
     	
 	public static void hideAllWindows() {		

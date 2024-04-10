@@ -94,7 +94,7 @@ public class LoginWindow extends JFrame implements LibWindow {
         lowerHalf = new JPanel();
         lowerHalf.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JButton backButton = new JButton("<= Back to Main");
+        JButton backButton = Util.buttonStyle(new JButton("<= Back to Main"));
         addBackButtonListener(backButton);
         lowerHalf.add(backButton);
     }
@@ -204,6 +204,7 @@ public class LoginWindow extends JFrame implements LibWindow {
     }
 
     private void addLoginButtonListener(JButton butn) {
+
         butn.addActionListener(evt -> {
 
             //[ 101 :  xyz, LIBRARIAN], 102=[102:abc, ADMIN], 103=[103:111, BOTH]
@@ -217,12 +218,13 @@ public class LoginWindow extends JFrame implements LibWindow {
                         break;
                     case "ADMIN":
                         LibrarySystem.hideAllWindows();
-                        CheckoutRecordWindow.INSTANCE.setVisible(true);
+                        CheckoutRecordWindow.INSTANCE.init();
+                        Util.centerFrameOnDesktop(CheckoutRecordWindow.INSTANCE);
                         message = "Welcome, Admin!";
                         break;
                     case "BOTH":
                         LibrarySystem.hideAllWindows();
-                        AddBookWindow.INSTANCE.setVisible(true);
+                        BookCopyWindow.INSTANCE.setVisible(true);
                         message = "Welcome, Both!";
                         break;
                     default:
@@ -233,8 +235,11 @@ public class LoginWindow extends JFrame implements LibWindow {
             } catch (LoginException e) {
                 e.printStackTrace();
             }
-
-            JOptionPane.showMessageDialog(this, message);
+            if(username.getText().isEmpty() || password.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Please fill all the fields");
+            }else {
+                JOptionPane.showMessageDialog(this, message);
+            }
         });
     }
 }
