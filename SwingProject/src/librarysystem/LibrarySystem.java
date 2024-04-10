@@ -1,19 +1,12 @@
 package librarysystem;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import business.ControllerInterface;
 import business.SystemController;
@@ -46,22 +39,66 @@ public class LibrarySystem extends JFrame implements LibWindow {
     private LibrarySystem() {}
     
     public void init() {
-    	formatContentPane();
-    	setPathToImage();
-    	insertSplashImage();
-		
-		createMenus();
-		//pack();
-		setSize(660,500);
-		isInitialized = true;
+//    	formatContentPane();
+//    	setPathToImage();
+//    	insertSplashImage();
+//
+//		createMenus();
+//		//pack();
+//		setSize(660,500);
+//		isInitialized = true;
+
+        formatContentPane();
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setSize(400, 300);
+//        setLocationRelativeTo(null); // Center the window on the screen
+//        setVisible(true);
     }
     
+//    private void formatContentPane() {
+//		mainPanel = new JPanel();
+//		mainPanel.setLayout(new GridLayout(100,100));
+//		getContentPane().add(mainPanel);
+//	}
+//
+
+
     private void formatContentPane() {
-		mainPanel = new JPanel();
-		mainPanel.setLayout(new GridLayout(1,1));
-		getContentPane().add(mainPanel);	
-	}
-    
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridBagLayout()); // Use GridBagLayout instead of GridLayout
+
+        // Create GridBagConstraints
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 10, 10); // Add some padding
+
+        // Add login form components
+        JLabel usernameLabel = new JLabel("Username:");
+        mainPanel.add(usernameLabel, gbc);
+
+        gbc.gridy++; // Move to the next row
+        JTextField usernameField = new JTextField(20);
+        mainPanel.add(usernameField, gbc);
+
+        gbc.gridy++; // Move to the next row
+        JLabel passwordLabel = new JLabel("Password:");
+        mainPanel.add(passwordLabel, gbc);
+
+        gbc.gridy++; // Move to the next row
+        JPasswordField passwordField = new JPasswordField(20);
+        mainPanel.add(passwordField, gbc);
+
+        gbc.gridy++; // Move to the next row
+        gbc.anchor = GridBagConstraints.CENTER;
+        // Align components to the center horizontally
+        JButton loginButton = new JButton("Login");
+        mainPanel.add(loginButton, gbc);
+
+        getContentPane().add(mainPanel);
+    }
+
+
     private void setPathToImage() {
     	String currDirectory = System.getProperty("user.dir");
     	pathToImage = currDirectory+"\\src\\librarysystem\\library.jpg";
@@ -107,7 +144,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			LibrarySystem.hideAllWindows();
 			LoginWindow.INSTANCE.init();
 			Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
-			LoginWindow.INSTANCE.setVisible(true);
+//			LoginWindow.INSTANCE.setVisible(true);
 			
 		}
     	

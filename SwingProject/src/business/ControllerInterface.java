@@ -7,7 +7,7 @@ import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 
 public interface ControllerInterface {
-	public void login(String id, String password) throws LoginException;
+	public String login(String id, String password) throws LoginException;
 	public List<String> allMemberIds();
 	public List<String> allBookIds();
 

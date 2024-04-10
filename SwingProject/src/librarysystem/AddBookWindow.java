@@ -44,6 +44,7 @@ public class AddBookWindow extends JFrame implements LibWindow {
 
     //Singleton class
     private AddBookWindow() {
+        initComponents();
     }
 
     private void initComponents() {
