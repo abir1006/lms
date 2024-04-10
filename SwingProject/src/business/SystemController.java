@@ -58,18 +58,15 @@ public class SystemController implements ControllerInterface {
         boolean memberIdFound = false;
 
         for(Map.Entry<String, Book> h: da.readBooksMap().entrySet()){
-            System.out.println(h.getValue());
+//            System.out.println(h.getValue());
             if(h.getValue().getIsbn().equals(Isbn)){
                 IsbnFound = true;
             }
         }
-//        48-56882 ====1004
+        //48-56882 ====1004
         for(Map.Entry<String, LibraryMember> h: da.readMemberMap().entrySet()){
-
             if(h.getValue().getMemberId().equals(memberId)){
                 memberIdFound = true;
-            }else{
-                System.out.println(h.getValue().getMemberId()+" =="+memberId);
             }
         }
         if(IsbnFound && memberIdFound)

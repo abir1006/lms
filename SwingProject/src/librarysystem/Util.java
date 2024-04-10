@@ -1,14 +1,11 @@
 package librarysystem;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.swing.JLabel;
+import javax.swing.*;
 
 public class Util {
 	public static final Color DARK_BLUE = Color.BLUE.darker();
@@ -71,4 +68,15 @@ public class Util {
 		int frameWidth = f.getSize().width;
 		f.setLocation(((width - frameWidth) / 2), (height - frameHeight) / 3);
 	}
+
+    public static JButton buttonStyle(JButton btn){
+        btn.setBackground(Color.WHITE);
+        btn.setForeground(Color.BLACK);
+        btn.setPreferredSize(new Dimension(130, 30));
+        btn.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createRaisedBevelBorder(),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+
+        return btn;
+    }
 }

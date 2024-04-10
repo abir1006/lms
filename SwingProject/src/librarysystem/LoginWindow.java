@@ -156,7 +156,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 
     private void defineLowerPanel() {
         lowerPanel = new JPanel();
-        loginButton = new JButton("Login");
+        loginButton = Util.buttonStyle(new JButton("Login"));
         addLoginButtonListener(loginButton);
         lowerPanel.add(loginButton);
     }
