@@ -5,6 +5,7 @@ import business.SystemController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 
 
 public class CheckoutEntryWindow extends JFrame implements LibWindow {
@@ -26,11 +27,12 @@ public class CheckoutEntryWindow extends JFrame implements LibWindow {
 	private JPanel leftTextPanel;
 	private JPanel rightTextPanel;
 
-	private JTextField memberId;
-	private JTextField Isbn;
+	private JTextField checkoutDate;
+	private JTextField checkoutDueDate;
+
 	private JLabel label;
 
-    private JButton checkButton;
+    private JButton addEntryButton;
     private JButton backButton;
 
 	public boolean isInitialized() {
@@ -44,6 +46,11 @@ public class CheckoutEntryWindow extends JFrame implements LibWindow {
     private String message = "NA";
 	/* This class is a singleton */
     private CheckoutEntryWindow() {}
+
+    public CheckoutEntryWindow(int duration){
+        System.out.println("Inside =="+duration);
+        System.out.println(String.valueOf(LocalDate.now().plusDays(duration)));
+    }
     
     public void init() {
         mainPanel = new JPanel();
@@ -115,24 +122,22 @@ public class CheckoutEntryWindow extends JFrame implements LibWindow {
     private void defineLeftTextPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
-        memberId = new JTextField(10);
-        memberId.setText("2004-05-10");
+        checkoutDate = new JTextField(10);
+        checkoutDate.setText("2004-05-10");
         JLabel label = new JLabel("Checkout Date");
         panel.add(label, BorderLayout.NORTH);
-        panel.add(memberId, BorderLayout.CENTER);
+        panel.add(checkoutDate, BorderLayout.CENTER);
         leftTextPanel = panel;
     }
 
     private void defineRightTextPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
-
-        Isbn = new JTextField(10);
-        Isbn.setText("2024-10-20");
+        checkoutDueDate = new JTextField(10);
+        checkoutDueDate.setText("2024-10-20");
         JLabel label = new JLabel("Due Date");
         panel.add(label, BorderLayout.NORTH);
-        panel.add(Isbn, BorderLayout.CENTER);
-
+        panel.add(checkoutDueDate, BorderLayout.CENTER);
         rightTextPanel = panel;
     }
 
@@ -145,9 +150,9 @@ public class CheckoutEntryWindow extends JFrame implements LibWindow {
 
         lowerPanel.add(Box.createHorizontalStrut(10));
 
-        checkButton = Util.buttonStyle(new JButton("Enter"));
-        checkRecordButtonListener(checkButton);
-        lowerPanel.add(checkButton);
+        addEntryButton = Util.buttonStyle(new JButton("Enter"));
+        addBookEntryRecordButtonListener(addEntryButton);
+        lowerPanel.add(addEntryButton);
     }
 
 
@@ -162,10 +167,11 @@ public class CheckoutEntryWindow extends JFrame implements LibWindow {
         });
     }
 
-    private void checkRecordButtonListener(JButton butn) {
+    private void addBookEntryRecordButtonListener(JButton butn) {
         butn.addActionListener(evt -> {
             System.out.println("Enter clicked");
-             checkRecord = ci.checkRecord(memberId.getText(), Isbn.getText());
+            System.out.println(checkoutDate.getText() +" ==="+checkoutDueDate.getText());
+            //checkRecord = ci.checkRecord(checkoutDate.getText(), checkoutDueDate.getText());
             if(checkRecord){
                 message = "Book is In.";
                 // Update the UI to show the "Continue" button

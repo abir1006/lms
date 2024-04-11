@@ -91,7 +91,7 @@ public class aa implements DataAccess {
 
     public static void main(String[] args) {
         aa c = new aa();
-        Object user = c.readFromStorage(DataAccessFacade.StorageType.USERS);
+        Object user = c.readFromStorage(DataAccessFacade.StorageType.BOOKS);
         System.out.println(user);
     }
 }
