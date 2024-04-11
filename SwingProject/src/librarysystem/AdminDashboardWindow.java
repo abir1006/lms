@@ -38,6 +38,9 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
     private String message = "NA";
 	/* This class is a singleton */
     private AdminDashboardWindow() {}
+    
+    private final static int width=130;
+    private final static int height=60;
 
     public void init() {
         AdminDashboardWindow.INSTANCE.setTitle("Admin Dashboard");
@@ -49,7 +52,7 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
         defineTopPanel();
 
         addMemberButton = Util.buttonStyle(new JButton("Add Member"));
-        addMemberButton.setPreferredSize(new Dimension(120,60));
+        addMemberButton.setPreferredSize(new Dimension(width,height));
         addMemberButton.addActionListener(evt -> {
             LibrarySystem.hideAllWindows();
             AddMemberWindow.INSTANCE.setVisible(true);
@@ -57,28 +60,23 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
         mainPanel.add(addMemberButton, BorderLayout.CENTER);
 
         addBookButton = Util.buttonStyle(new JButton("Add Book"));
-        addBookButton.setPreferredSize(new Dimension(120,60));
+        addBookButton.setPreferredSize(new Dimension(width,height));
         addBookButton.addActionListener(evt -> {
-            System.out.println("Add Book clicked");
+            LibrarySystem.hideAllWindows();
+            AddBookWindow.INSTANCE.setVisible(true);
         });
         mainPanel.add(addBookButton, BorderLayout.SOUTH);
 
         addBookCopyButton = Util.buttonStyle(new JButton("Add Book Copy"));
-        addBookCopyButton.setPreferredSize(new Dimension(120,60));
+        addBookCopyButton.setPreferredSize(new Dimension(width,height));
         addBookCopyButton.addActionListener(evt -> {
-            System.out.println("Add Book Copy clicked");
+            LibrarySystem.hideAllWindows();
+            BookCopyWindow.INSTANCE.setVisible(true);
         });
         mainPanel.add(addBookCopyButton);
 
-        addUserButton = Util.buttonStyle(new JButton("Add User"));
-        addUserButton.setPreferredSize(new Dimension(120, 60));
-        addUserButton.addActionListener(evt -> {
-            System.out.println("Add User clicked");
-        });
-        mainPanel.add(addUserButton);
-
         checkoutRecButton = Util.buttonStyle(new JButton("Checkout Record"));
-        checkoutRecButton.setPreferredSize(new Dimension(120, 60));
+        checkoutRecButton.setPreferredSize(new Dimension(width, height));
         checkoutRecButton.addActionListener(evt -> {
             LibrarySystem.hideAllWindows();
             CheckoutRecordWindow.INSTANCE.setTitle("Checkout Record Book");
@@ -90,7 +88,7 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
         mainPanel.add(checkoutRecButton);
 
         viewBooksButton = Util.buttonStyle(new JButton("View Books"));
-        viewBooksButton.setPreferredSize(new Dimension(120, 60));
+        viewBooksButton.setPreferredSize(new Dimension(width, height));
         viewBooksButton.addActionListener(evt -> {
             LibrarySystem.hideAllWindows();
             ViewAllBooksWindow.INSTANCE.setTitle("Book List");
@@ -102,7 +100,7 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
         mainPanel.add(viewBooksButton);
 
         viewMemberButton = Util.buttonStyle(new JButton("View Members"));
-        viewMemberButton.setPreferredSize(new Dimension(120, 60));
+        viewMemberButton.setPreferredSize(new Dimension(width, height));
         viewMemberButton.addActionListener(evt -> {
             LibrarySystem.hideAllWindows();
             ViewAllMembersWindow.INSTANCE.setTitle("Member List");
@@ -114,7 +112,7 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
         mainPanel.add(viewMemberButton);
 
         viewUsersButton = Util.buttonStyle(new JButton("View Users"));
-        viewUsersButton.setPreferredSize(new Dimension(120, 60));
+        viewUsersButton.setPreferredSize(new Dimension(width, height));
         viewUsersButton.addActionListener(evt -> {
             LibrarySystem.hideAllWindows();
             ViewUsersWindow.INSTANCE.setTitle("User List");
@@ -127,7 +125,7 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
 
 
         logOutButton = Util.buttonStyle(new JButton("Logout"));
-        logOutButton.setPreferredSize(new Dimension(120, 60));
+        logOutButton.setPreferredSize(new Dimension(width, height));
         logOutButton.addActionListener(evt -> {
             LoginWindow.setLoggedIn(false);
             LibrarySystem.hideAllWindows();

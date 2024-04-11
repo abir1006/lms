@@ -28,7 +28,7 @@ public class AddMemberWindow extends JFrame implements ActionListener {
         setVisible(true);
         setBackground(Color.gray);
         Util.centerFrameOnDesktop(this);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Two panels
         JPanel p1 = new JPanel();
