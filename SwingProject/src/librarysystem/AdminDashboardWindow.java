@@ -24,8 +24,7 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
     private JButton logOutButton;
     private JButton viewBooksButton;
     private JButton viewMemberButton;
-
-
+    private  JButton viewUsersButton;
 
     public boolean isInitialized() {
 		return isInitialized;
@@ -101,6 +100,18 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
             ViewAllMembersWindow.INSTANCE.setVisible(true);
         });
         mainPanel.add(viewMemberButton);
+
+        viewUsersButton = Util.buttonStyle(new JButton("View Users"));
+        viewUsersButton.setPreferredSize(new Dimension(120, 60));
+        viewUsersButton.addActionListener(evt -> {
+            LibrarySystem.hideAllWindows();
+            ViewUsersWindow.INSTANCE.setTitle("User List");
+            ViewUsersWindow.INSTANCE.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            Util.centerFrameOnDesktop(ViewUsersWindow.INSTANCE);
+            ViewUsersWindow.INSTANCE.init();
+            ViewUsersWindow.INSTANCE.setVisible(true);
+        });
+        mainPanel.add(viewUsersButton);
 
 
         logOutButton = Util.buttonStyle(new JButton("Logout"));
