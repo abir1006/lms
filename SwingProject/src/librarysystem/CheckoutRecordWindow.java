@@ -63,6 +63,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
         defineUpperHalf();
         defineMiddleHalf();
         createTablePanel();
+        clearFields();
 
         BorderLayout bl = new BorderLayout();
         bl.setVgap(10);
@@ -76,6 +77,11 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
         isInitialized(true);
         pack();
         setSize(660, 500);
+    }
+
+    private void clearFields() {
+        Isbn.setText("");
+        memberId.setText("");
     }
 
     public void createTablePanel() {
@@ -111,11 +117,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
     		upperHalf.setLayout(new BorderLayout());
     		defineTopPanel();
     		defineMiddlePanel();
-
-            if(showCheckBtn) {
-                defineLowerPanel();
-                repaint();
-            }
+            defineLowerPanel();
 
     		upperHalf.add(topPanel, BorderLayout.NORTH);
     		upperHalf.add(middlePanel, BorderLayout.CENTER);
@@ -154,7 +156,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
         memberId = new JTextField(10);
-        memberId.setText("1004");
+//        memberId.setText("1004");
         JLabel label = new JLabel("Member ID");
         panel.add(label, BorderLayout.NORTH);
         panel.add(memberId, BorderLayout.CENTER);
@@ -167,7 +169,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
 
         Isbn = new JTextField(10);
-        Isbn.setText("48-56882");
+//        Isbn.setText("");
         JLabel label = new JLabel("ISBN ");
         panel.add(label, BorderLayout.NORTH);
         panel.add(Isbn, BorderLayout.CENTER);
@@ -180,69 +182,82 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
         checkButton = Util.buttonStyle(new JButton("Check"));
         checkRecordButtonListener(checkButton);
         lowerPanel.add(checkButton);
+
+        backButton = Util.buttonStyle(new JButton("<< Main Menu"));
+        addBackButtonListener(backButton);
+        lowerPanel.add(backButton);
+//        if(showContinueBtn) {
+            continueButton = Util.buttonStyle(new JButton("Continue >>"));
+            continueButtonListener(continueButton);
+            lowerPanel.add(continueButton);
+//        }
     }
 
     private void continueButtonListener(JButton btnContinue) {
         btnContinue.addActionListener((event) -> {
             LibrarySystem.hideAllWindows();
-            CheckoutEntryWindow checkoutEntryWindow = CheckoutEntryWindow.INSTANCE;
-            checkoutEntryWindow.init();
-            checkoutEntryWindow.setVisible(true);
+            CheckoutEntryWindow.INSTANCE.setTitle("Checkout Entry Form");
+            CheckoutEntryWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            CheckoutEntryWindow.INSTANCE.init();
+            Util.centerFrameOnDesktop(CheckoutEntryWindow.INSTANCE);
+            CheckoutEntryWindow.INSTANCE.setVisible(true);
+            revalidate();
+            repaint();
         });
     }
 
-    private void defineContinuePanel(){
-           continueButtonPanel = new JPanel();
-
-            backButton = Util.buttonStyle(new JButton("<< Main Menu"));
-            addBackButtonListener(backButton);
-            lowerPanel.add(backButton);
-
-            lowerPanel.add(Box.createHorizontalStrut(10));
-
-        if(showContinueBtn) {
-            continueButton = Util.buttonStyle(new JButton("Continue >>"));
-            continueButtonListener(continueButton);
-            continueButtonPanel.add(continueButton);
-            lowerPanel.add(continueButtonPanel);
-        }
-    }
-
-    private static void addBackButtonListener(JButton butn) {
+    private void addBackButtonListener(JButton butn) {
         butn.addActionListener(evt -> {
+            checkRecord = false;
             LibrarySystem.hideAllWindows();
-          AdminDashboardWindow.INSTANCE.setVisible(true);
-//                message = "Book is In.";
-//                revalidate();
-//                repaint();
+            AdminDashboardWindow.INSTANCE.setTitle("Main Dashboard");
+            AdminDashboardWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            AdminDashboardWindow.INSTANCE.init();
+            Util.centerFrameOnDesktop(AdminDashboardWindow.INSTANCE);
+            AdminDashboardWindow.INSTANCE.setVisible(true);
+            clearFields();
+            revalidate();
+            repaint();
+
        });
     }
 
     private void checkRecordButtonListener(JButton butn) {
         butn.addActionListener(evt -> {
+            boolean flag = false;
+            if(memberId.getText().isEmpty() && Isbn.getText().isEmpty()) {
+                flag = true;
+                JOptionPane.showMessageDialog(this, "All fields are required");
+            } else
+            if(memberId.getText().isEmpty()){
+                flag = true;
+                JOptionPane.showMessageDialog(this, "MemberId is required");
+            }else if(Isbn.getText().isEmpty()){
+                flag = true;
+                JOptionPane.showMessageDialog(this, "ISBN is required");
+            }
+
+//            System.out.println(memberId.getText()+"c===="+Isbn.getText());
              checkRecord = ci.checkRecord(memberId.getText(), Isbn.getText());
             if(checkRecord){
-                message = "Book is In.";
-                // Update the UI to show the "Continue" button
-                defineContinuePanel();
+                message = "Book is IN.";
                 // Repaint the frame
                 revalidate();
                 repaint();
-                showCheckBtn = false;
-                showContinueBtn = true;
+                JOptionPane.showMessageDialog(this, message);
             }else{
-                showContinueBtn = false;
-                message = "Book is not found with given criteria.";
+                if(!flag) {
+                    message = "Book is not found with given criteria.";
+                    JOptionPane.showMessageDialog(this, message);
+                }
             }
+//            clearFields();
             //Member
             //{1004=Member Info: ID: 1004, name: Ricardo Montalbahn, 641-472-2871 (501 Central, Mountain View, 94707), 1003=Member Info: ID: 1003, name: Sarah Eagleton, 451-234-8811 (42 Dogwood Dr., Fairfield, 52556), 1002=Member Info: ID: 1002, name: Drew Stevens, 702-998-2414 (1435 Channing Ave, Palo Alto, 94301), 1001=Member Info: ID: 1001, name: Andy Rogers, 641-223-2211 (5001 Venice Dr., Los Angeles, 93736)}
             //Book
             //{48-56882=isbn: 48-56882, maxLength: 7, available: true, 28-12331=isbn: 28-12331, maxLength: 7, available: true, 23-11451=isbn: 23-11451, maxLength: 21, available: true, 99-22223=isbn: 99-22223, maxLength: 21, available: true}
             // ISBN: 48-56882, member: 1004
-            System.out.println( "showContinueBtn ="+showContinueBtn);
-            System.out.println( "check ="+showCheckBtn);
 
-            JOptionPane.showMessageDialog(this, message);
         });
     }
 }
