@@ -55,6 +55,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
     private CheckoutRecordWindow() {}
 
     private boolean showCheckBtn = true;
+    private boolean showContinueBtn = false;
 
     public void init() {
         mainPanel = new JPanel();
@@ -110,7 +111,11 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
     		upperHalf.setLayout(new BorderLayout());
     		defineTopPanel();
     		defineMiddlePanel();
-    		defineLowerPanel();
+
+            if(showCheckBtn) {
+                defineLowerPanel();
+                repaint();
+            }
 
     		upperHalf.add(topPanel, BorderLayout.NORTH);
     		upperHalf.add(middlePanel, BorderLayout.CENTER);
@@ -174,9 +179,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
         lowerPanel = new JPanel();
         checkButton = Util.buttonStyle(new JButton("Check"));
         checkRecordButtonListener(checkButton);
-        if(showCheckBtn) {
-            lowerPanel.add(checkButton);
-        }
+        lowerPanel.add(checkButton);
     }
 
     private void continueButtonListener(JButton btnContinue) {
@@ -197,10 +200,12 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
 
             lowerPanel.add(Box.createHorizontalStrut(10));
 
+        if(showContinueBtn) {
             continueButton = Util.buttonStyle(new JButton("Continue >>"));
             continueButtonListener(continueButton);
             continueButtonPanel.add(continueButton);
             lowerPanel.add(continueButtonPanel);
+        }
     }
 
     private static void addBackButtonListener(JButton butn) {
@@ -210,7 +215,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
 //                message = "Book is In.";
 //                revalidate();
 //                repaint();
-        });
+       });
     }
 
     private void checkRecordButtonListener(JButton butn) {
@@ -224,8 +229,9 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
                 revalidate();
                 repaint();
                 showCheckBtn = false;
-
+                showContinueBtn = true;
             }else{
+                showContinueBtn = false;
                 message = "Book is not found with given criteria.";
             }
             //Member
@@ -233,6 +239,9 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
             //Book
             //{48-56882=isbn: 48-56882, maxLength: 7, available: true, 28-12331=isbn: 28-12331, maxLength: 7, available: true, 23-11451=isbn: 23-11451, maxLength: 21, available: true, 99-22223=isbn: 99-22223, maxLength: 21, available: true}
             // ISBN: 48-56882, member: 1004
+            System.out.println( "showContinueBtn ="+showContinueBtn);
+            System.out.println( "check ="+showCheckBtn);
+
             JOptionPane.showMessageDialog(this, message);
         });
     }
