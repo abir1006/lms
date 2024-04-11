@@ -30,8 +30,14 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
 	private AllMemberIdsWindow() {}
 	
 	public void init() {
+//        AllMemberIdsWindow.INSTANCE.setTitle("Members");
+//        AllMemberIdsWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        Util.centerFrameOnDesktop(AllMemberIdsWindow.INSTANCE);
+//        AllMemberIdsWindow.INSTANCE.setVisible(true);
+
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
+
 		defineTopPanel();
 		defineMiddlePanel();
 		defineLowerPanel();

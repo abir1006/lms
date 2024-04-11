@@ -15,11 +15,20 @@ import dataaccess.User;
 public class LoginWindow extends JFrame implements LibWindow {
     public static final LoginWindow INSTANCE = new LoginWindow();
 
+    private static boolean isLoggedIn = false;
+
+    public static final boolean isLoggedIn(){
+        return isLoggedIn;
+    }
+
+    public static final boolean setLoggedIn(boolean status){
+        return isLoggedIn = status;
+    }
 
     ControllerInterface ci = new SystemController();
 
 	private boolean isInitialized = false;
-	
+
 	private JPanel mainPanel;
 	private JPanel upperHalf;
 	private JPanel middleHalf;
@@ -36,8 +45,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 	private JTextField password;
 	private JLabel label;
 	private JButton loginButton;
-	private JButton logoutButton;
-	
+
 	public boolean isInitialized() {
 		return isInitialized;
 	}
@@ -58,7 +66,6 @@ public class LoginWindow extends JFrame implements LibWindow {
 
     		defineUpperHalf();
     		defineMiddleHalf();
-//    		defineLowerHalf();
 
     		BorderLayout bl = new BorderLayout();
     		bl.setVgap(30);
@@ -66,7 +73,6 @@ public class LoginWindow extends JFrame implements LibWindow {
     		mainPanel.setLayout(bl);
     		mainPanel.add(upperHalf, BorderLayout.NORTH);
     		mainPanel.add(middleHalf, BorderLayout.CENTER);
-//    		mainPanel.add(lowerHalf, BorderLayout.SOUTH);
     		getContentPane().add(mainPanel);
     		isInitialized(true);
     		pack();
@@ -87,22 +93,14 @@ public class LoginWindow extends JFrame implements LibWindow {
     		middleHalf.setLayout(new BorderLayout());
     		JSeparator s = new JSeparator();
     		s.setOrientation(SwingConstants.HORIZONTAL);
-    		//middleHalf.add(Box.createRigidArea(new Dimension(0,50)));
     		middleHalf.add(s, BorderLayout.SOUTH);
     	}
-    private void defineLowerHalf() {
-        lowerHalf = new JPanel();
-        lowerHalf.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JButton backButton = Util.buttonStyle(new JButton("<= Back to Main"));
-        addBackButtonListener(backButton);
-        lowerHalf.add(backButton);
-    }
     private void defineTopPanel() {
         topPanel = new JPanel();
         JPanel intPanel = new JPanel(new BorderLayout());
         intPanel.add(Box.createRigidArea(new Dimension(0,20)), BorderLayout.NORTH);
-        JLabel loginLabel = new JLabel("Login");
+        JLabel loginLabel = new JLabel("Provide your credentials to login");
         Util.adjustLabelFont(loginLabel, Color.BLUE.darker(), true);
         intPanel.add(loginLabel, BorderLayout.CENTER);
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -111,7 +109,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 
     private void defineMiddlePanel() {
         middlePanel = new JPanel();
-        middlePanel.setLayout(new GridLayout(2, 1)); // 2 rows, 1 column
+        middlePanel.setLayout(new GridLayout(2, 1));
 
         defineLeftTextPanel();
         defineRightTextPanel();
@@ -125,6 +123,9 @@ public class LoginWindow extends JFrame implements LibWindow {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
 
         username = new JTextField(10);
+        username.setText("102");
+        username.setPreferredSize(new Dimension(username.getPreferredSize().width, 40)); // Adjust 40 as needed
+
         JLabel label = new JLabel("Username:");
         panel.add(label, BorderLayout.NORTH);
         panel.add(username, BorderLayout.CENTER);
@@ -137,6 +138,9 @@ public class LoginWindow extends JFrame implements LibWindow {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
 
         password = new JPasswordField(10);
+        password.setText("abc");
+        username.setPreferredSize(new Dimension(username.getPreferredSize().width, 40)); // Adjust 40 as needed
+
         JLabel label = new JLabel("Password:");
         panel.add(label, BorderLayout.NORTH);
         panel.add(password, BorderLayout.CENTER);
@@ -145,14 +149,6 @@ public class LoginWindow extends JFrame implements LibWindow {
     }
 
 
-    private void defineMiddlePanel1() {
-        middlePanel=new JPanel();
-        middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        defineLeftTextPanel();
-        defineRightTextPanel();
-        middlePanel.add(leftTextPanel);
-        middlePanel.add(rightTextPanel);
-    }
 
     private void defineLowerPanel() {
         lowerPanel = new JPanel();
@@ -161,41 +157,7 @@ public class LoginWindow extends JFrame implements LibWindow {
         lowerPanel.add(loginButton);
     }
 
-    private void defineLeftTextPanel1() {
-        JPanel topText = new JPanel();
-        JPanel bottomText = new JPanel();
-        topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-        bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
 
-        username = new JTextField(10);
-        label = new JLabel("Username");
-        label.setFont(Util.makeSmallFont(label.getFont()));
-        topText.add(username);
-        bottomText.add(label);
-
-        leftTextPanel = new JPanel();
-        leftTextPanel.setLayout(new BorderLayout());
-        leftTextPanel.add(topText,BorderLayout.NORTH);
-        leftTextPanel.add(bottomText,BorderLayout.CENTER);
-    }
-    private void defineRightTextPanel11() {
-        JPanel topText = new JPanel();
-        JPanel bottomText = new JPanel();
-        topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-        bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-
-        password = new JPasswordField(10);
-        label = new JLabel("Password");
-        label.setFont(Util.makeSmallFont(label.getFont()));
-        topText.add(password);
-        bottomText.add(label);
-
-        rightTextPanel = new JPanel();
-        rightTextPanel.setLayout(new BorderLayout());
-        rightTextPanel.add(topText,BorderLayout.NORTH);
-        rightTextPanel.add(bottomText,BorderLayout.CENTER);
-    }
-    	
     private void addBackButtonListener(JButton butn) {
         butn.addActionListener(evt -> {
             LibrarySystem.hideAllWindows();
@@ -204,33 +166,53 @@ public class LoginWindow extends JFrame implements LibWindow {
     }
 
     private void addLoginButtonListener(JButton butn) {
-
         butn.addActionListener(evt -> {
-
             //[ 101 :  xyz, LIBRARIAN], 102=[102:abc, ADMIN], 103=[103:111, BOTH]
             try {
+                LibrarySystem.hideAllWindows();
                 String  role = ci.login(username.getText(), password.getText());
-                switch (role) {
-                    case "LIBRARIAN":
-                        LibrarySystem.hideAllWindows();
-                        AddBookWindow.INSTANCE.setVisible(true);
-                        message = "Welcome, LIBRARIAN!";
-                        break;
-                    case "ADMIN":
-                        LibrarySystem.hideAllWindows();
-                        CheckoutRecordWindow.INSTANCE.init();
-                        Util.centerFrameOnDesktop(CheckoutRecordWindow.INSTANCE);
-                        message = "Welcome, Admin!";
-                        break;
-                    case "BOTH":
-                        LibrarySystem.hideAllWindows();
-                        BookCopyWindow.INSTANCE.setVisible(true);
-                        message = "Welcome, Both!";
-                        break;
-                    default:
-                        message = "Invalid Login, Try again!";
-                        break;
+                if(!role.isEmpty()){
+                    setLoggedIn(true);
                 }
+                if(isLoggedIn()) {
+                    switch (role) {
+                        case "LIBRARIAN":
+                            AddBookWindow.INSTANCE.setTitle("Add Book Form");
+                            AddBookWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            AddBookWindow.INSTANCE.init();
+                            Util.centerFrameOnDesktop(AddBookWindow.INSTANCE);
+                            AddBookWindow.INSTANCE.setVisible(true);
+                            message = "Welcome, LIBRARIAN!";
+                            break;
+                        case "ADMIN":
+                            AdminDashboardWindow.INSTANCE.setTitle("Admin");
+                            AdminDashboardWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            AdminDashboardWindow.INSTANCE.init();
+                            Util.centerFrameOnDesktop(AdminDashboardWindow.INSTANCE);
+                            AdminDashboardWindow.INSTANCE.setVisible(true);
+                            message = "Welcome, Admin!";
+
+//                            ViewAllBooksWindow.INSTANCE.init();
+//                            Util.centerFrameOnDesktop(ViewAllBooksWindow.INSTANCE);
+//                            ViewAllBooksWindow.INSTANCE.setVisible(true);
+//                            message = "Welcome, Admin!";
+                            break;
+                        case "BOTH":
+                            BookCopyWindow.INSTANCE.setTitle("Book Copy Form");
+                            BookCopyWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            BookCopyWindow.INSTANCE.init();
+                            Util.centerFrameOnDesktop(BookCopyWindow.INSTANCE);
+                            BookCopyWindow.INSTANCE.setVisible(true);
+                            message = "Welcome, Both!";
+                            break;
+                        default:
+                            message = "Invalid Login, Try again!";
+                            break;
+                    }
+                }else{
+                        message = "Login again!";
+                        JOptionPane.showMessageDialog(this, message);
+                    }
 
             } catch (LoginException e) {
                 e.printStackTrace();
@@ -238,6 +220,10 @@ public class LoginWindow extends JFrame implements LibWindow {
             if(username.getText().isEmpty() || password.getText().isEmpty()){
                 JOptionPane.showMessageDialog(this, "Please fill all the fields");
             }else {
+                if(!isLoggedIn()){
+                    message = "Invalid credential, try again!";
+                    LoginWindow.INSTANCE.setVisible(true);
+                }
                 JOptionPane.showMessageDialog(this, message);
             }
         });

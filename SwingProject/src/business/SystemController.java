@@ -52,6 +52,28 @@ public class SystemController implements ControllerInterface {
     }
 
     @Override
+    public HashMap<String,Book> getAllBooks() {
+        DataAccess da = new DataAccessFacade();
+        HashMap<String, Book> retval = da.readBooksMap();
+        return retval;
+
+    }
+
+    @Override
+    public HashMap<String, LibraryMember> getAllMembers() {
+        DataAccess da = new DataAccessFacade();
+        HashMap<String, LibraryMember> retval = da.readMemberMap();
+        return retval;
+    }
+
+    @Override
+    public HashMap<String, User> getAllUsers() {
+        DataAccess da = new DataAccessFacade();
+        HashMap<String, User> retval = da.readUserMap();
+        return retval;
+    }
+
+    @Override
     public boolean checkRecord(String memberId, String Isbn) {
         DataAccess da = new DataAccessFacade();
         boolean IsbnFound = false;
