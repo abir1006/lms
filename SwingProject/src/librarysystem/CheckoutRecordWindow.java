@@ -53,7 +53,9 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
     private String message = "NA";
 	/* This class is a singleton */
     private CheckoutRecordWindow() {}
-    
+
+    private boolean showCheckBtn = true;
+
     public void init() {
         mainPanel = new JPanel();
 
@@ -172,7 +174,9 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
         lowerPanel = new JPanel();
         checkButton = Util.buttonStyle(new JButton("Check"));
         checkRecordButtonListener(checkButton);
-        lowerPanel.add(checkButton);
+        if(showCheckBtn) {
+            lowerPanel.add(checkButton);
+        }
     }
 
     private void continueButtonListener(JButton btnContinue) {
@@ -201,7 +205,8 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
 
     private static void addBackButtonListener(JButton butn) {
         butn.addActionListener(evt -> {
-            System.out.println("Back clicked");
+            LibrarySystem.hideAllWindows();
+          AdminDashboardWindow.INSTANCE.setVisible(true);
 //                message = "Book is In.";
 //                revalidate();
 //                repaint();
@@ -218,6 +223,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
                 // Repaint the frame
                 revalidate();
                 repaint();
+                showCheckBtn = false;
 
             }else{
                 message = "Book is not found with given criteria.";

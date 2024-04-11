@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,6 +50,11 @@ public class aa implements DataAccess {
 
     @Override
     public void saveNewMember(LibraryMember member) {
+
+    }
+
+    @Override
+    public void saveNewBook(Book book) {
 
     }
 
