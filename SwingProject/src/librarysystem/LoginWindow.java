@@ -182,7 +182,7 @@ public class LoginWindow extends JFrame implements LibWindow {
                             AddBookWindow.INSTANCE.init();
                             Util.centerFrameOnDesktop(AddBookWindow.INSTANCE);
                             AddBookWindow.INSTANCE.setVisible(true);
-                            message = "Welcome, LIBRARIAN!";
+                            message = "Welcome, "+role;
                             break;
                         case "ADMIN":
                             AdminDashboardWindow.INSTANCE.setTitle("Admin");
@@ -190,7 +190,7 @@ public class LoginWindow extends JFrame implements LibWindow {
                             AdminDashboardWindow.INSTANCE.init();
                             Util.centerFrameOnDesktop(AdminDashboardWindow.INSTANCE);
                             AdminDashboardWindow.INSTANCE.setVisible(true);
-                            message = "Welcome, Admin!";
+                            message = "Welcome, "+role;
 
 //                            ViewAllBooksWindow.INSTANCE.init();
 //                            Util.centerFrameOnDesktop(ViewAllBooksWindow.INSTANCE);
@@ -203,7 +203,7 @@ public class LoginWindow extends JFrame implements LibWindow {
                             BookCopyWindow.INSTANCE.init();
                             Util.centerFrameOnDesktop(BookCopyWindow.INSTANCE);
                             BookCopyWindow.INSTANCE.setVisible(true);
-                            message = "Welcome, Both!";
+                            message = "Welcome, "+role;
                             break;
                         default:
                             message = "Invalid Login, Try again!";
