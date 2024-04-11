@@ -153,9 +153,12 @@ public class CheckoutEntryWindow extends JFrame implements LibWindow {
 
     private void addBackButtonListener(JButton butn) {
         butn.addActionListener(evt -> {
-            System.out.println("Back clicked");
             LibrarySystem.hideAllWindows();
-            LibrarySystem.INSTANCE.setVisible(true);
+            AdminDashboardWindow.INSTANCE.setTitle("Main Dashboard");
+            AdminDashboardWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            AdminDashboardWindow.INSTANCE.init();
+            Util.centerFrameOnDesktop(AdminDashboardWindow.INSTANCE);
+            AdminDashboardWindow.INSTANCE.setVisible(true);
         });
     }
 

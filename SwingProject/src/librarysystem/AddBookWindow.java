@@ -61,7 +61,6 @@ public class AddBookWindow extends JFrame implements LibWindow {
         createTablePanel();
 
         BorderLayout bl = new BorderLayout();
-//        bl.setVgap(10);
 
         mainPanel.setLayout(bl);
         mainPanel.add(upperHalf, BorderLayout.NORTH);

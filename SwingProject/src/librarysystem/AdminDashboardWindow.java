@@ -39,7 +39,7 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
 	/* This class is a singleton */
     private AdminDashboardWindow() {}
     
-    private final static int width=130;
+    private final static int width=150;
     private final static int height=60;
 
     public void init() {
