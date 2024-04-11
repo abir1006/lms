@@ -42,8 +42,14 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
     private final static int width=150;
     private final static int height=60;
 
+    private String role;
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public void init() {
-        AdminDashboardWindow.INSTANCE.setTitle("Admin Dashboard");
+        AdminDashboardWindow.INSTANCE.setTitle( role + " Dashboard");
         AdminDashboardWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Util.centerFrameOnDesktop(AdminDashboardWindow.INSTANCE);
         AdminDashboardWindow.INSTANCE.setVisible(true);
@@ -85,6 +91,7 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
             CheckoutRecordWindow.INSTANCE.init();
             CheckoutRecordWindow.INSTANCE.setVisible(true);
         });
+        checkoutRecButton.setEnabled(role != "LIBRARIAN" ? false : true);
         mainPanel.add(checkoutRecButton);
 
         viewBooksButton = Util.buttonStyle(new JButton("View Books"));

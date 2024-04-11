@@ -170,40 +170,20 @@ public class LoginWindow extends JFrame implements LibWindow {
             //[ 101 :  xyz, LIBRARIAN], 102=[102:abc, ADMIN], 103=[103:111, BOTH]
             try {
                 LibrarySystem.hideAllWindows();
-                String  role = ci.login(username.getText(), password.getText());
+                String role = ci.login(username.getText(), password.getText());
                 if(!role.isEmpty()){
                     setLoggedIn(true);
                 }
                 if(isLoggedIn()) {
                     switch (role) {
-                        case "LIBRARIAN":
-                            AddBookWindow.INSTANCE.setTitle("Add Book Form");
-                            AddBookWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                            AddBookWindow.INSTANCE.init();
-                            Util.centerFrameOnDesktop(AddBookWindow.INSTANCE);
-                            AddBookWindow.INSTANCE.setVisible(true);
-                            message = "Welcome, LIBRARIAN!";
-                            break;
-                        case "ADMIN":
-                            AdminDashboardWindow.INSTANCE.setTitle("Admin");
+                        case "LIBRARIAN", "ADMIN", "BOTH":
+                            AdminDashboardWindow.INSTANCE.setTitle(role);
                             AdminDashboardWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            AdminDashboardWindow.INSTANCE.setRole(role);
                             AdminDashboardWindow.INSTANCE.init();
                             Util.centerFrameOnDesktop(AdminDashboardWindow.INSTANCE);
                             AdminDashboardWindow.INSTANCE.setVisible(true);
-                            message = "Welcome, Admin!";
-
-//                            ViewAllBooksWindow.INSTANCE.init();
-//                            Util.centerFrameOnDesktop(ViewAllBooksWindow.INSTANCE);
-//                            ViewAllBooksWindow.INSTANCE.setVisible(true);
-//                            message = "Welcome, Admin!";
-                            break;
-                        case "BOTH":
-                            BookCopyWindow.INSTANCE.setTitle("Book Copy Form");
-                            BookCopyWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                            BookCopyWindow.INSTANCE.init();
-                            Util.centerFrameOnDesktop(BookCopyWindow.INSTANCE);
-                            BookCopyWindow.INSTANCE.setVisible(true);
-                            message = "Welcome, Both!";
+                            message = "Welcome, "+role+"!";
                             break;
                         default:
                             message = "Invalid Login, Try again!";
