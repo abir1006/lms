@@ -24,7 +24,8 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
     private JButton logOutButton;
     private JButton viewBooksButton;
     private JButton viewMemberButton;
-    private  JButton viewUsersButton;
+    private JButton viewUsersButton;
+    private JButton checkoutRecButton;
 
     public boolean isInitialized() {
 		return isInitialized;
@@ -69,13 +70,24 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
         });
         mainPanel.add(addBookCopyButton);
 
-
         addUserButton = Util.buttonStyle(new JButton("Add User"));
         addUserButton.setPreferredSize(new Dimension(120, 60));
         addUserButton.addActionListener(evt -> {
             System.out.println("Add User clicked");
         });
         mainPanel.add(addUserButton);
+
+        checkoutRecButton = Util.buttonStyle(new JButton("Checkout Record"));
+        checkoutRecButton.setPreferredSize(new Dimension(120, 60));
+        checkoutRecButton.addActionListener(evt -> {
+            LibrarySystem.hideAllWindows();
+            CheckoutRecordWindow.INSTANCE.setTitle("Checkout Record Book");
+            CheckoutRecordWindow.INSTANCE.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            Util.centerFrameOnDesktop(CheckoutRecordWindow.INSTANCE);
+            CheckoutRecordWindow.INSTANCE.init();
+            CheckoutRecordWindow.INSTANCE.setVisible(true);
+        });
+        mainPanel.add(checkoutRecButton);
 
         viewBooksButton = Util.buttonStyle(new JButton("View Books"));
         viewBooksButton.setPreferredSize(new Dimension(120, 60));

@@ -120,9 +120,14 @@ public class DataAccessFacade implements DataAccess {
 		}
 		return retVal;
 	}
-	
-	
-	
+
+    public void saveNewBook(Book book) {
+        HashMap<String, Book> books = readBooksMap();
+        String isbn = book.getIsbn();
+        books.put(isbn, book);
+        saveToStorage(StorageType.BOOKS, books);
+    }
+
 	final static class Pair<S,T> implements Serializable{
 		
 		S first;
