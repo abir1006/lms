@@ -52,6 +52,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
 	private JTextField messageBar = new JTextField();
 
     private String message = "NA";
+    private String bookname;
 	/* This class is a singleton */
     private CheckoutRecordWindow() {}
 
@@ -63,7 +64,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
 
         defineUpperHalf();
         defineMiddleHalf();
-        createTablePanel();
+//        createTablePanel();
 //        clearFields();
 
         BorderLayout bl = new BorderLayout();
@@ -72,7 +73,7 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
         mainPanel.setLayout(bl);
         mainPanel.add(upperHalf, BorderLayout.NORTH);
         mainPanel.add(middleHalf, BorderLayout.CENTER);
-        mainPanel.add(tablePanel, BorderLayout.CENTER );
+//        mainPanel.add(tablePanel, BorderLayout.CENTER );
 
         getContentPane().add(mainPanel);
         isInitialized(true);
@@ -111,7 +112,6 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
 
         tablePanel.add(scrollPane, BorderLayout.CENTER); // Add scroll pane with CENTER constraint
     }
-
 
     private void defineUpperHalf() {
     		upperHalf = new JPanel();
@@ -230,19 +230,25 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
     }
 
     private boolean validateInput(){
-        boolean flag = false;
-        if(memberId.getText().isEmpty() && Isbn.getText().isEmpty()) {
-            flag = true;
+//
+//        boolean flag = false;
+        if(!(memberId.getText().isEmpty() && Isbn.getText().isEmpty())) {
+            return true;
+        }else{
             JOptionPane.showMessageDialog(this, "All fields are required");
-        } else
-        if(memberId.getText().isEmpty()){
-            flag = true;
-            JOptionPane.showMessageDialog(this, "MemberId is required");
-        }else if(Isbn.getText().isEmpty()){
-            flag = true;
-            JOptionPane.showMessageDialog(this, "ISBN is required");
+            return false;
         }
-        return flag;
+//            flag = true;
+//            JOptionPane.showMessageDialog(this, "All fields are required");
+//        } else
+//        if(memberId.getText().isEmpty()){
+//            flag = true;
+//            JOptionPane.showMessageDialog(this, "MemberId is required");
+//        }else if(Isbn.getText().isEmpty()){
+//            flag = true;
+//            JOptionPane.showMessageDialog(this, "ISBN is required");
+//        }
+//        return flag;
     }
 
     private void checkRecordButtonListener(JButton butn) {
@@ -258,18 +264,19 @@ public class CheckoutRecordWindow extends JFrame implements LibWindow {
                     if(b.getValue().getIsbn().equals(Isbn.getText())){
                         System.out.println("Duration=="+b.getValue().getMaxCheckoutLength());
                         duration = b.getValue().getMaxCheckoutLength();
+                        bookname = b.getValue().getTitle();
                     }
                 }
-                new CheckoutEntryWindow(duration);
+                new CheckoutEntryWindow(duration,Isbn.getText(), bookname);
                 revalidate();
                 repaint();
                 JOptionPane.showMessageDialog(this, message);
             }else{
-                boolean flag = validateInput();
-                if(!flag) {
+//                boolean flag = validateInput();
+//                if(!flag) {
                     message = "Book is not found with given criteria.";
                     JOptionPane.showMessageDialog(this, message);
-                }
+//                }
             }
 //            clearFields();
             //Member
