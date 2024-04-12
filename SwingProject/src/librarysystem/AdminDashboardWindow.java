@@ -81,18 +81,18 @@ public class AdminDashboardWindow extends JFrame implements LibWindow {
         });
         mainPanel.add(addBookCopyButton);
 
-        checkoutRecButton = Util.buttonStyle(new JButton("Checkout Record"));
-        checkoutRecButton.setPreferredSize(new Dimension(width, height));
-        checkoutRecButton.addActionListener(evt -> {
-            LibrarySystem.hideAllWindows();
-            CheckoutRecordWindow.INSTANCE.setTitle("Checkout Record Book");
-            CheckoutRecordWindow.INSTANCE.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            Util.centerFrameOnDesktop(CheckoutRecordWindow.INSTANCE);
-            CheckoutRecordWindow.INSTANCE.init();
-            CheckoutRecordWindow.INSTANCE.setVisible(true);
-        });
-        checkoutRecButton.setEnabled(role != "LIBRARIAN" ? false : true);
-        mainPanel.add(checkoutRecButton);
+//        checkoutRecButton = Util.buttonStyle(new JButton("Checkout Record"));
+//        checkoutRecButton.setPreferredSize(new Dimension(width, height));
+//        checkoutRecButton.addActionListener(evt -> {
+//            LibrarySystem.hideAllWindows();
+//            CheckoutRecordWindow.INSTANCE.setTitle("Checkout Record Book");
+//            CheckoutRecordWindow.INSTANCE.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//            Util.centerFrameOnDesktop(CheckoutRecordWindow.INSTANCE);
+//            CheckoutRecordWindow.INSTANCE.init();
+//            CheckoutRecordWindow.INSTANCE.setVisible(true);
+//        });
+//        checkoutRecButton.setEnabled(role != "LIBRARIAN" ? false : true);
+//        mainPanel.add(checkoutRecButton);
 
         viewBooksButton = Util.buttonStyle(new JButton("View Books"));
         viewBooksButton.setPreferredSize(new Dimension(width, height));

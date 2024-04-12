@@ -176,7 +176,16 @@ public class LoginWindow extends JFrame implements LibWindow {
                 }
                 if(isLoggedIn()) {
                     switch (role) {
-                        case "LIBRARIAN", "ADMIN", "BOTH":
+                        case "BOTH":
+                            BothDashboardWindow.INSTANCE.setTitle(role);
+                            BothDashboardWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            BothDashboardWindow.INSTANCE.setRole(role);
+                            BothDashboardWindow.INSTANCE.init();
+                            Util.centerFrameOnDesktop(BothDashboardWindow.INSTANCE);
+                            BothDashboardWindow.INSTANCE.setVisible(true);
+                            message = "Welcome, "+role+"!";
+                            break;
+                        case "ADMIN":
                             AdminDashboardWindow.INSTANCE.setTitle(role);
                             AdminDashboardWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                             AdminDashboardWindow.INSTANCE.setRole(role);
@@ -185,14 +194,25 @@ public class LoginWindow extends JFrame implements LibWindow {
                             AdminDashboardWindow.INSTANCE.setVisible(true);
                             message = "Welcome, "+role+"!";
                             break;
+
+                        case "LIBRARIAN":
+                            LibraryDashboardWindow.INSTANCE.setTitle(role);
+                            LibraryDashboardWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            LibraryDashboardWindow.INSTANCE.setRole(role);
+                            LibraryDashboardWindow.INSTANCE.init();
+                            Util.centerFrameOnDesktop(LibraryDashboardWindow.INSTANCE);
+                            LibraryDashboardWindow.INSTANCE.setVisible(true);
+                            message = "Welcome, "+role+"!";
+                            break;
                         default:
                             message = "Invalid Login, Try again!";
                             break;
                     }
                 }else{
-                        message = "Login again!";
-                        JOptionPane.showMessageDialog(this, message);
-                    }
+                    message = "Login again!";
+                    JOptionPane.showMessageDialog(this, message);
+                }
+
 
             } catch (LoginException e) {
                 e.printStackTrace();
